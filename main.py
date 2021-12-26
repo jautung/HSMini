@@ -1,4 +1,5 @@
 import logging
+from game.actions import PlayMinionCard
 from game.cards.minion_card import MinionCard
 from game.player.deck import Deck
 from game.game import Game
@@ -8,8 +9,11 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG)
 
     test_game = Game(Deck(SafeList([MinionCard(1, 1, 1)])), Deck(SafeList([MinionCard(1, 1, 1)])))
-    test_game.start_player_turn()
+    test_game.start_turn()
+    logging.debug(test_game)
+    action_result = test_game.take_action(PlayMinionCard(0))
+    logging.debug("action_result: %s", action_result)
     logging.debug(test_game)
     test_game.switch_players()
-    test_game.start_player_turn()
+    test_game.start_turn()
     logging.debug(test_game)

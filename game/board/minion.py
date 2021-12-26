@@ -10,3 +10,6 @@ class Minion(HasHealthMixin):
 
     def set_attack(self, new_attack: int) -> None:
         self._attack = new_attack
+
+    def __str__(self) -> str:
+        return f"{self._attack}/{self.get_current_health()}"

@@ -88,3 +88,12 @@ class Board:
                 return self._player_face
             case _:
                 logging.error("Board side of unknown type")
+
+    def __str__(self) -> str:
+        player_minions_str = "[ " +\
+            " | ".join([str(minion) for minion in self._player_minions]) +\
+            " ]"
+        opponent_minions_str = "[ " +\
+            " | ".join([str(minion) for minion in self._opponent_minions]) +\
+            " ]"
+        return f"{player_minions_str}\n{opponent_minions_str}"

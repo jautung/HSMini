@@ -18,6 +18,12 @@ class Player:
     def get_face(self) -> Face:
         return self._face
 
+    def get_hand(self) -> Hand:
+        return self._hand
+
+    def get_mana(self) -> int:
+        return self._mana_bin.get_mana()
+
     def start_turn(self) -> None:
         self._mana_bin.increment_mana()
         drawn_object = self._deck.draw_top_card()
