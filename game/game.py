@@ -1,6 +1,7 @@
 import logging
 from typing import Optional
-from game.actions import Action, MinionAttackFace, MinionAttackMinion, PlayMinionCard
+from game.actions.action_errors import ActionError, NotEnoughMana
+from game.actions.actions import Action, MinionAttackFace, MinionAttackMinion, PlayMinionCard
 from game.board.board import Board, BoardSide
 from game.cards.minion_card import MinionCard
 from game.player.deck import Deck
@@ -15,21 +16,25 @@ class Game:
     def start_turn(self) -> None:
         self._player.start_turn()
 
-    def take_action(self, action: Action) -> Optional[str]: # Optionally returns an error message
+    def take_action(self, action: Action) -> Optional[ActionError]:
         if isinstance(action, PlayMinionCard):
             minion_card = self._player.get_hand().get_cards()[action.minion_card_index]
-            if isinstance(minion_card, MinionCard):
-                if self._player.get_mana() < minion_card.get_mana():
-                    return "Not enough mana"
-                self._board.add_minion(minion_card.make_minion(), BoardSide.PLAYER)
-                return None
-            else:
+            if not isinstance(minion_card, MinionCard):
                 logging.error("PlayMinionCard used with not a MinionCard")
-        elif isinstance(action, MinionAttackMinion):
-            return "Not yet implemented"
-        elif isinstance(action, MinionAttackFace):
-            return "Not yet implemented"
-        return "Unknown action taken"
+                return ActionError()
+            if self._player.get_mana() < minion_card.get_mana():
+                return NotEnoughMana()
+            self._board.add_minion(minion_card.make_minion(), BoardSide.PLAYER)
+            return None
+
+        if isinstance(action, MinionAttackMinion):
+            return None
+
+        if isinstance(action, MinionAttackFace):
+            return None
+
+        logging.error("Unknown action taken")
+        return ActionError()
 
     def switch_players(self) -> None:
         self._board.switch_players()
