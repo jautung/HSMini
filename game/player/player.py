@@ -23,7 +23,10 @@ class Player:
         drawn_object = self._deck.draw_top_card()
         if isinstance(drawn_object, FatigueCard):
             self._face.take_damage(drawn_object.get_fatigue_damage())
-            logging.debug("Player (%s) takes %s fatigue damage", self._gid, drawn_object.get_fatigue_damage())
+            logging.debug(
+                "Player (%s) takes %s fatigue damage",
+                self._gid,
+                drawn_object.get_fatigue_damage())
         elif isinstance(drawn_object, Card):
             self._hand.add_card(drawn_object)
             logging.debug("Player (%s) draws card '%s'", self._gid, drawn_object)
