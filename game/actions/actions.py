@@ -1,6 +1,13 @@
 from typing import SupportsIndex
 
 class Action:
+    def __str__(self) -> str:
+        return type(self).__name__ +\
+            "(" +\
+            ",".join([key + ": " + str(value) for key, value in vars(self).items()]) +\
+            ")"
+
+class EndTurn(Action):
     pass
 
 class PlayMinionCard(Action):

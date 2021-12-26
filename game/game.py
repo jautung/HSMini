@@ -1,11 +1,12 @@
 import logging
 from typing import Optional
 from game.actions.action_errors import ActionError, NotEnoughMana
-from game.actions.actions import Action, MinionAttackFace, MinionAttackMinion, PlayMinionCard
+from game.actions.actions import Action, EndTurn, MinionAttackFace, MinionAttackMinion, PlayMinionCard
 from game.board.board import Board, BoardSide
 from game.cards.minion_card import MinionCard
 from game.player.deck import Deck
 from game.player.player import Player
+from utils.safe_list import SafeList
 
 class Game:
     def __init__(self, player_deck: Deck, opponent_deck: Deck) -> None:
@@ -15,6 +16,14 @@ class Game:
 
     def start_turn(self) -> None:
         self._player.start_turn()
+
+    def legal_actions(self) -> SafeList[Action]:
+        actions: SafeList[Action] = SafeList([EndTurn()])
+        for index, card in enumerate(self._player.get_hand().get_cards()):
+            if isinstance(card, MinionCard) and\
+                self._player.get_mana() >= card.get_mana():
+                actions.append(PlayMinionCard(index))
+        return actions
 
     def take_action(self, action: Action) -> Optional[ActionError]:
         if isinstance(action, PlayMinionCard):
