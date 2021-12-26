@@ -12,6 +12,9 @@ class Deck:
     def shuffle(self) -> None:
         random.shuffle(self._cards)
 
+    def get_size(self) -> int:
+        return len(self._cards)
+
     def draw_top_card(self) -> DrawnObject:
         if len(self._cards) == 0:
             self._fatigue_counter += 1
@@ -19,7 +22,7 @@ class Deck:
         return self._cards.pop(0)
 
     def discard_top_card(self) -> None:
-        if self._cards.count > 0:
+        if len(self._cards) > 0:
             self._cards.pop(0)
 
     def shuffle_in_card(self, card: Card) -> None:

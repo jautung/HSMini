@@ -1,7 +1,8 @@
-from typing import List
+from typing import List, Optional, SupportsIndex, TypeVar
 
-class SafeList(List):
-    def __getitem__(self, index, default = None):
+T = TypeVar("T") # pylint: disable=invalid-name
+class SafeList(List[T]):
+    def get(self, index: SupportsIndex, default: Optional[T] = None) -> Optional[T]:
         try:
             return super().__getitem__(index)
         except IndexError:

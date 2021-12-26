@@ -9,3 +9,6 @@ class MinionCard(Card):
 
     def make_minion(self) -> Minion:
         return Minion(self._attack, self._health)
+
+    def __str__(self) -> str:
+        return f"{self.get_mana()} Mana {self._attack}/{self._health}"
