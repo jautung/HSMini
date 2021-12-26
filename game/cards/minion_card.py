@@ -1,5 +1,5 @@
 from game.cards.card import Card
-from game.minion import Minion
+from game.board.minion import Minion
 
 class MinionCard(Card):
     def __init__(self, mana: int, attack: int, health: int) -> None:

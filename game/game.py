@@ -1,11 +1,11 @@
 import logging
-from game.board import Board
+from game.board.board import Board
 from game.cards.card import Card
 from game.cards.fatigue_card import FatigueCard
-from game.deck import Deck
-from game.face import Face
-from game.hand import Hand
-from game.mana_bin import ManaBin
+from game.player.deck import Deck
+from game.player.face import Face
+from game.player.hand import Hand
+from game.player.mana_bin import ManaBin
 
 class Game:
     def __init__(self, player_deck: Deck, opponent_deck: Deck) -> None:

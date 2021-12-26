@@ -1,7 +1,7 @@
 from enum import Enum
 import logging
 from typing import SupportsIndex
-from game.minion import Minion
+from game.board.minion import Minion
 from utils.safe_list import SafeList
 
 class BoardSide(Enum):
